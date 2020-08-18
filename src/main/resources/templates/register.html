@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title>Register</title>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" >
+</head>
+<body>
+<form th:action="@{/register}" method="post">
+
+    <input type="text" placeholder="نام" th:field="${registerDto.firstName}">
+    <input type="text" placeholder="نام خانوادگی" th:field="${registerDto.lastName}">
+    <input type="text" placeholder="تلفن همراه" th:field="${registerDto.phoneNumber}">
+    <input type="text" placeholder="ایمیل" th:field="${registerDto.email}">
+    <p th:if="${param.usernameError}">ایمیل قبلت وارد شده است!</p>
+    <input type="text" placeholder="نام کاربري" th:field="${registerDto.username}">
+    <p th:if="${param.usernameError}">این نام کاربری قبلا انتخاب شده است</p>
+    <input type="text" placeholder="رمز عبور" th:field="${registerDto.password}">
+    <input type="text" placeholder="تکرار رمز عبور" th:field="${registerDto.confirmPassword}">
+    <select class="custom-select" required th:field="*{registerDto.roleTitle}">
+        <option value="">لطفا نقش خود را انتخاب نمایید</option>
+        <option value="STUDENT">دانشجو</option>
+        <option value="TEACHER">استاد</option>
+
+    </select>
+    <input type="submit" value="submit">
+
+</form>
+
+</body>
+</html>
