@@ -4,29 +4,178 @@
 <head>
     <title>Register</title>
     <meta charset="UTF-8">
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" >
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
+
+    <style>
+        .invalid-feedback{
+            text-align: center;
+        }
+
+    </style>
 </head>
-<body>
-<form th:action="@{/register}" method="post">
+<body  style="font-family: Bbadr;background-color: #ABFFE2">
+<div class="container mt-5" style="max-width: 23rem">
 
-    <input type="text" placeholder="نام" th:field="${registerDto.firstName}">
-    <input type="text" placeholder="نام خانوادگی" th:field="${registerDto.lastName}">
-    <input type="text" placeholder="تلفن همراه" th:field="${registerDto.phoneNumber}">
-    <input type="text" placeholder="ایمیل" th:field="${registerDto.email}">
-    <p th:if="${param.usernameError}">ایمیل قبلت وارد شده است!</p>
-    <input type="text" placeholder="نام کاربري" th:field="${registerDto.username}">
-    <p th:if="${param.usernameError}">این نام کاربری قبلا انتخاب شده است</p>
-    <input type="text" placeholder="رمز عبور" th:field="${registerDto.password}">
-    <input type="text" placeholder="تکرار رمز عبور" th:field="${registerDto.confirmPassword}">
-    <select class="custom-select" required th:field="*{registerDto.roleTitle}">
-        <option value="">لطفا نقش خود را انتخاب نمایید</option>
-        <option value="STUDENT">دانشجو</option>
-        <option value="TEACHER">استاد</option>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card rounded border mb-3" style="border: #00b08c solid 2px">
+                <div class="card-header text-center">
+                    <h4 style="color:#00b08c;">ثبت نام</h4>
+                </div>
+                <form class="needs-validation" novalidate id="registerForm" th:action="@{/register}" method="post">
+                    <div class="form-row justify-content-center">
 
-    </select>
-    <input type="submit" value="submit">
+                        <div class="form-group col-sm-10 mt-3">
+                            <div class="input-group" dir="rtl">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user-circle-o"></i></span>
+                                </div>
+                                <input type="text" placeholder="نام" th:field="${registerDto.firstName}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback"> نام خود را وارد کنید!</div>
+                            </div>
+                        </div>
 
-</form>
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="mb-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-user-circle-o"></i></span>
+                                    </div>
+                                    <input type="text" placeholder="نام خانوادگی"
+                                           class="form-control"
+                                           th:field="${registerDto.lastName}"
+                                           aria-describedby="inputGroupPrepend" required>
+                                    <div class="invalid-feedback" >
+                                        نام خانوادگی خود را وارد کنید!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                </div>
+                                <input type="text" placeholder="تلفن همراه"
+                                       th:field="${registerDto.phoneNumber}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required
+                                       pattern="^[0-9]{11}$">
+                                <div class="invalid-feedback">
+                                    شماره تلفن باید 11 رقم و فقط شامل عدد باشد!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-id-card-o"></i></span>
+                                </div>
+                                <input type="password" placeholder="کدملی"
+                                       th:field="${registerDto.nationalCode}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required pattern="^[0-9]{10}$">
+                                <div class="invalid-feedback">
+                                    کدملی باید 10 رقم و فقط شامل عدد باشد!
+                                </div>
+                            </div>
+                            <div class="text-danger text-center" th:if="${param.nationalCodeError}">کدملی قبلا وارد شده است!</div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                </div>
+                                <input type="email" placeholder="ایمیل" th:field="${registerDto.email}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    ایمیل خود را وارد کنید!
+                                </div>
+                            </div><br>
+                            <div class="text-danger text-center" th:if="${param.emailError}">ایمیل قبلا وارد شده است!</div>
+                        </div>
+
+
+
+                        <div class="form-group col-sm-10 mt-3">
+                            <div class="input-group" dir="rtl">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input type="text"  th:field="${registerDto.username}"
+                                       class="form-control" id="username" placeholder="نام کاربری"
+                                       aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    نام کاربری خود را وارد کنید!
+                                </div>
+                            </div><br>
+                            <div class="text-center text-danger" th:if="${param.usernameError}"> نام کاربری قبلا انتخاب شده است!</div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3 text-center" dir="rtl" id="pwd-container">
+                            <div class="mb-2">
+                                <div class="input-group text-center">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" dir="rtl" onclick="showPassword()"><i
+                                                class="fa fa-eye-slash" id="passIcon"></i></span>
+                                    </div>
+
+                                    <input type="password" th:field="${registerDto.password}"
+                                           class="form-control" id="password" placeholder="رمز عبور"
+                                           aria-describedby="inputGroupPrepend" required
+                                           pattern="(?=.*[a-z])(?=.*?[0-9]).{8,}$">
+                                    <div class="invalid-feedback">
+                                        رمز عبور باید حداقل 8 رقم و شامل حروف و اعداد باشد!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-10 mb-3">
+                            <div class="form-group text-center" dir="rtl" >
+                                <select class="custom-select" id="role" required th:field="*{registerDto.roleTitle}">
+                                    <option value="">لطفا نقش خود را مشخص کنید</option>
+                                    <option th:each="role:${allRoles}"
+                                        th:value="${role.title.name()}"
+                                        th:text="${role.title.getPersian()}"
+                                        th:if="${role.title.name() != 'ADMIN'} "
+                                        >
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">لطفا یک مورد را انتخاب کنید!</div>
+                            </div>
+                        </div>
+
+                        <div class="col-10 text-center mb-3">
+                            <button id="submit" class="btn" type="submit" style="font-weight: bold;;background-color:#00b08c;width: 100%;color: white">ثبت نام</button>
+                        </div>
+                        <div class="col-10 mb-3 text-center">
+                            <h6 class="text-center"><a class="page-link"  style="font-weight: bold;;color: #00b08c;" href="/">ورود</a>
+                            </h6>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery-3.3.1.slim.min.js"></script>
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/showPassword.js"></script>
+<script src="/js/validation.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 </body>
 </html>
