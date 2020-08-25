@@ -18,24 +18,22 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    private String title;
+    private String courseTitle;
 
-    @Enumerated(EnumType.STRING)
-    private LessonTitle lessonTitle;
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+    @OneToOne
+    private Lesson lesson;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date finishDate;
+    private String startDate;
 
-    @ManyToMany
-    private List<Student> students = new ArrayList<>();
+    @Column(nullable = false)
+    private String finishDate;
 
-    @ManyToOne
-    private Teacher teacher;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Account> students = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Account> teachers;
 }

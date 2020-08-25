@@ -1,38 +1,38 @@
 package ir.maktab.model.entity;
 
-import ir.maktab.model.enums.AccountStatus;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    private boolean enabled = false;
-
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private AccountStatus accountStatus;
+    private boolean isEnabled;
+
+    @ManyToOne
+    private Status status;
+
+
+    @OneToOne
+    private Role role;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personal_info_id",referencedColumnName = "id")
     private PersonalInfo personalInfo;
-
-    @ManyToMany
-    private List<Role> roleTitle;
 
 
     @Override
@@ -46,5 +46,17 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(username);
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", isEnabled=" + isEnabled +
+                ", status=" + status +
+                ", role=" + role +
+                '}';
     }
 }

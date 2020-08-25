@@ -5,8 +5,10 @@ import ir.maktab.model.enums.RoleTitle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface RoleRepository extends JpaRepository<Role,Integer> {
+import java.util.Optional;
 
-    Role findByTitle(RoleTitle roleTitle);
+@Repository
+public interface RoleRepository extends JpaRepository<Role,Long> {
+
+    Optional<Role> findByTitle(RoleTitle roleTitle);
 }

@@ -64,13 +64,12 @@ public class HomeController {
             model.addAttribute("studentCounter", accountService.countByRole((long) 2));
             model.addAttribute("teacherCounter", accountService.countByRole((long) 3));
             model.addAttribute("courseCounter", courseService.countAll());
-
             return "admin-dashboard";
-
         } else {
             redirectUrl += "loginError";
             return "redirect:" + redirectUrl;
         }
+        //TODO ADD SPRING SECURITY IN PHASE B
     }
 
     @GetMapping(value = "/register")
@@ -150,7 +149,6 @@ public class HomeController {
             accountService.save(account);
             modelAndView.setViewName("accountVerified");
             confirmationTokenRepository.deleteById(token.getTokenid());
-            // TODO DELETE TOKEN WORK?
         } else {
             modelAndView.addObject("message", "The link is invalid or broken!");
             modelAndView.setViewName("error");

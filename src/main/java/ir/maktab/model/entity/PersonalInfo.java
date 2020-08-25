@@ -8,13 +8,15 @@ import java.util.Objects;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "Type" , discriminatorType = DiscriminatorType.STRING)
-
-@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class PersonalInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -27,5 +29,13 @@ public class PersonalInfo {
 
     @Column(nullable = false,unique = true)
     private String email;
+
+    @Column(unique = true, nullable = false)
+    private String nationalCode;
+
+    @OneToOne(mappedBy = "personalInfo")
+    private Account account;
+
+
 
 }
