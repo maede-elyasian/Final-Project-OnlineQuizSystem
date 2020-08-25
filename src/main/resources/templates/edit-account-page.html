@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>ویرایش حساب کاربری</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
+
+</head>
+<body class="text-center row p-5 justify-content-center align-content-center" style="font-family: Bbadr;background-color: #ABFFE2">
+
+<div class="container mt-5" style="max-width: 23rem;">
+
+    <div class="row">
+        <div class="col">
+            <div class="card rounded border mb-3" style="border: #00b08c solid 2px">
+                <div class="card-header text-center">
+                    <h4 style="color:#00b08c;">ویرایش حساب کاربری</h4>
+                </div>
+                <form class="needs-validation" novalidate action="#"
+                      th:action="@{/admin/editAccount/__${editAccountDto.getId()}__}" method="post">
+                    <div class="form-row justify-content-center">
+
+                        <div class="form-group col-sm-10 mt-3">
+                            <div class="input-group" dir="rtl">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user-circle-o"></i></span>
+                                </div>
+                                <input type="text" placeholder="نام" th:field="*{editAccountDto.firstName}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback"> نام را وارد کنید!</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="mb-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-user-circle-o"></i></span>
+                                    </div>
+                                    <input type="text" placeholder="نام خانوادگی"
+                                           class="form-control"
+                                           th:field="*{editAccountDto.lastName}"
+                                           aria-describedby="inputGroupPrepend" required>
+                                    <div class="invalid-feedback">
+                                        نام خانوادگی را وارد کنید!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                </div>
+                                <input type="text" placeholder="تلفن همراه"
+                                       th:field="${editAccountDto.phoneNumber}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required
+                                       pattern="^[0-9]{11}$">
+                                <div class="invalid-feedback">
+                                    شماره تلفن باید 11 رقم و فقط شامل عدد باشد!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-id-card-o"></i></span>
+                                </div>
+                                <input type="password" placeholder="کدملی"
+                                       th:field="*{editAccountDto.nationalCode}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required pattern="^[0-9]{10}$">
+                                <div class="invalid-feedback">
+                                    کدملی باید 10 رقم و فقط شامل عدد باشد!
+                                </div>
+                            </div>
+                            <div class="text-danger text-center" th:if="${param.nationalCodeError}">کدملی قبلا وارد شده
+                                است!
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3" dir="rtl">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                </div>
+                                <input type="email" placeholder="ایمیل" th:field="${editAccountDto.email}"
+                                       class="form-control"
+                                       aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    ایمیل را وارد کنید!
+                                </div>
+                            </div>
+                            <div class="text-danger text-center" th:if="${param.emailError}">ایمیل قبلا وارد شده است!
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-sm-10 mt-3">
+                            <div class="input-group" dir="rtl">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input type="text" th:field="${editAccountDto.username}"
+                                       class="form-control" id="username" placeholder="نام کاربری"
+                                       aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    نام کاربری را وارد کنید!
+                                </div>
+                            </div>
+                            <div class="text-center text-danger" th:if="${param.usernameError}"> نام کاربری قبلا انتخاب
+                                شده است!
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 mt-3 text-center" dir="rtl" id="pwd-container">
+                            <div class="mb-2">
+                                <div class="input-group text-center">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" dir="rtl" onclick="showPassword()"><i
+                                                class="fa fa-eye-slash" id="passIcon"></i></span>
+                                    </div>
+
+                                    <input type="password" th:field="${editAccountDto.password}"
+                                           class="form-control" id="password" placeholder="رمز عبور"
+                                           aria-describedby="inputGroupPrepend" required
+                                           pattern="^[_a-zA-Z0-9\-]{8,15}$">
+                                    <div class="invalid-feedback">
+                                        رمز عبور باید حداقل 8 رقم و شامل حروف و اعداد باشد!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-10 mb-3">
+                            <div class="form-group text-center" dir="rtl">
+                                <select class="custom-select" id="role" required th:field="*{editAccountDto.role}">
+                                    <option value="">لطفا نقش را مشخص کنید</option>
+                                    <option th:each="role:${roles}"
+                                            th:value="${role.title.name()}"
+                                            th:text="${role.title.getPersian()}"
+                                            th:if="${role.title.name() != 'ADMIN'} ">
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">لطفا یک مورد را انتخاب کنید!</div>
+                            </div>
+                        </div>
+
+                        <div class="col-10 text-center mb-3">
+                            <input class="btn" type="submit" value="تایید"
+                                   style="font-weight: bold;;background-color:#00b08c;width: 100%;color: white"/>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery-3.3.1.slim.min.js"></script>
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/showPassword.js"></script>
+<script src="/js/validation.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست حساب های کاربری</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
+    <style>
+        body {
+            background: #f4f4f4 !important;
+            font-family: Bbadr;
+        }
+        #main-header{
+            border-bottom:2px solid #f4f4f4;
+            background-color: #50E5C0 !important;
+        }
+
+        /* NAVBAR */
+
+        #navbar li{
+            display:inline;
+            padding-left:20px;
+            list-style:none;
+        }
+
+        .navbar a{
+            text-decoration:none;
+            color:#f4f4f4 !important;
+        }
+
+        .navbar a:hover{
+            color:#56a79a;
+            border-bottom: 2px solid #f4f4f4;
+            padding-bottom:3px;
+        }
+
+        /* Navbar */
+        .navbar {
+            min-height: 33px !important;
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        .navbar-nav > li > a, .navbar-brand {
+            padding-top: 6px !important;
+            padding-bottom: 0 !important;
+            height: 33px;
+        }
+
+        .navbar-default {
+            background-color: #50E5C0;
+            border-color: #50E5C0;
+        }
+
+        .navbar-default .navbar-brand {
+            color: #ecf0f1;
+        }
+
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-brand:focus {
+            color: #ffbbbc;
+        }
+
+        .navbar-default .navbar-text {
+            color: #ecf0f1;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            color: #f4f4f4;
+            padding:10px 0;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus {
+            color:#56a79a;
+            border-bottom: 1px solid #56a79a;
+            padding-bottom:3px;
+        }
+
+        .navbar-default .navbar-nav > .active > a,
+        .navbar-default .navbar-nav > .active > a:hover,
+        .navbar-default .navbar-nav > .active > a:focus {
+            color: #f4f4f4;
+
+        }
+
+        .navbar-default .navbar-nav > .open > a,
+        .navbar-default .navbar-nav > .open > a:hover,
+        .navbar-default .navbar-nav > .open > a:focus {
+            color: #ffbbbc;
+            background-color: #50E5C0;
+        }
+
+        .navbar-default .navbar-toggle {
+            border-color: #50E5C0;
+        }
+
+        .navbar-default .navbar-toggle:hover,
+        .navbar-default .navbar-toggle:focus {
+            background-color: fuchsia;
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #ecf0f1;
+        }
+
+        .navbar-default .navbar-collapse,
+        .navbar-default .navbar-form {
+            border-color: #888888;
+        }
+
+        /*HEADER*/
+        #header{
+            background:#333333;
+            color:#ffffff;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Custom */
+        .main-color-bg {
+            background-color: #50E5C0 !important;
+            border-bottom:1px solid #f4f4f4 !important;
+            color: #f4f4f4 !important;
+            font-size: 20px;
+
+        }
+
+        /* Footer */
+        #footer {
+            background: #333333;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        input[type=text]{
+            border: 2px #888888 solid;
+        }
+
+
+    </style>
+</head>
+
+<body class="text-center justify-content-center align-content-center">
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-default main-color-bg" id="main-header" dir="rtl">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+
+                <a class="nav-link" th:href="@{/admin/adminMenu}"><i class="fa fa-gear"></i> داشبورد </a>
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link" th:href="@{/admin/addCourse}"> <i class="fa fa-book "></i> دوره ها </a>
+            </li>
+            <li class="nav-item active">
+
+                <a class="nav-link disabled" th:href="@{/admin/allUsers}"> <i class="fa fa-users "></i> کاربران </a>
+            </li>
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout"> <i class="fa fa-sign-out text-right"></i> خروج </a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="border m-5" style="border: #38CEA8 solid 2px">
+    <form th:action="@{/admin/search}" method="post">
+
+        <div class="p-1 m-1 mb-3 row  w-auto justify-content-center  rounded" dir="rtl">
+
+            <input class="text-center rounded m-2"
+                   type="text"
+                   th:field="*{search.nationalCode}"
+                   placeholder="کد ملی"/>
+
+            <input class="text-center rounded m-2"
+                   type="text" th:field="*{search.firstName}"
+                   placeholder="نام"/>
+
+            <input class="text-center rounded m-2"
+                   type="text" th:field="*{search.lastName}"
+                   placeholder="نام خانوادگی"/>
+
+            <select class="custom-select w-auto m-2" th:field="*{search.role}">
+                <option th:value="null" th:text="نقش"></option>
+                <option th:each="role:${roles}"
+                        th:value="${role.title.name()}"
+                        th:text="${role.title.getPersian()}">
+                </option>
+            </select>
+
+            <select class="custom-select w-auto m-2" th:field="*{search.status}">
+                <option th:value="null" th:text="وضعیت"></option>
+                <option th:each="status:${statuses}"
+                        th:value="${status.title.name()}"
+                        th:text="${status.title.getPersian()}">
+                </option>
+            </select>
+
+            <input class="btn m-2 btn-dark" type="submit" value="جستجو"/>
+
+        </div>
+    </form>
+</div>
+
+<section>
+    <div class="container m-5">
+        <div class="col-sm-12 justify-content-center ">
+            <table class="table table-hover text-center border ">
+                <thead>
+                <tr class="table-active">
+                    <th colspan="2">عملیات</th>
+                    <th>نقش</th>
+                    <th>وضعیت</th>
+                    <th>ایمیل</th>
+                    <th>شماره تماس</th>
+                    <th>نام خانوادگی</th>
+                    <th>نام</th>
+                    <th>کد ملی</th>
+                    <th>نام کاربری</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="account : ${accounts}">
+
+                    <td>
+                        <form action="#" th:action="@{/admin/accountActivation/__${account.getId()}__}">
+                            <input class="btn btn-success"
+                                   type="submit" th:value="${account.status.title.name()=='ACTIVE'?'غیرفعال کردن':'فعال کردن'}">
+                        </form>
+                    </td>
+
+                    <td>
+                        <form action="#" th:action="@{/admin/editAccount/__${account.id}__}">
+                            <input class="btn btn-secondary" type="submit" value="ویرایش">
+                        </form>
+                    </td>
+                    <td th:text="${account.role.title.getPersian()}"></td>
+                    <td th:text="${account.status.title.getPersian()}"></td>
+                    <td th:text="${account.personalInfo.email}"></td>
+                    <td th:text="${account.personalInfo.phoneNumber}"></td>
+                    <td th:text="${account.personalInfo.lastName}"></td>
+                    <td th:text="${account.personalInfo.firstName}"></td>
+                    <td th:text="${account.personalInfo.nationalCode}"></td>
+                    <td th:text="${account.username}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+<footer id="footer">
+    <p dir="rtl">سامانه آزمون آنلاین &copy; 1399</p>
+</footer>
+
+
+</body>
+</html>

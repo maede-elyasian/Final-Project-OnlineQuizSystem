@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>اضافه کردن عضو</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<section>
+    <div class="container m-5">
+        <div class="col-sm-12 justify-content-center ">
+            <table class="table table-striped text-center border" dir="rtl">
+                <tr>
+                    <th>نام</th>
+                    <th>نام خانوادگی</th>
+                    <th>نام کاربری</th>
+                    <th>نقش</th>
+                    <th>عملیات</th>
+                </tr>
+
+                <tr th:each="account:${accounts}">
+                    <td th:text="${account.personalInfo.firstName}"></td>
+                    <td th:text="${account.personalInfo.lastName}"></td>
+                    <td th:text="${account.username}"></td>
+                    <td th:text="${account.role.title.persian}"></td>
+
+                    <td>
+                        <form th:action="@{/admin/addMembersToCourse/__${courseInfo.id}__}" method="post">
+
+                            <input type="text" hidden th:name="memberId" th:value="${account.id}">
+                            <input type="text" hidden th:name="role" th:value="${account.role.getTitle()}">
+                            <input class="btn btn-success"
+                                   type="submit"
+                                   value="افزودن به دوره">
+                        </form>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row ml-auto mt-4 justify-content-center">
+        <a th:href="@{/admin/addCourse}" class="btn btn-dark">بازگشت</a>
+    </div>
+</div>
+
+
+</body>
+</html>
