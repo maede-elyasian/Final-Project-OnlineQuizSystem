@@ -1,0 +1,13 @@
+.btn_edit{
+    width: 75px;
+    background-color: #9fcdff;
+}
+
+.btn_delete{
+    width: 75px;
+    background-color: #9fcdff;
+}
+
+.btn_delete,.btn_edit:hover{
+    background-color: #8BECEC;
+}

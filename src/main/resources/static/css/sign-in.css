@@ -1,0 +1,34 @@
+body{
+    background-color: #DEF7F7;
+}
+.mainDiv {
+    border: 3px solid #7dd5e9;
+    box-shadow: 2px 3px #888888;
+    border-radius: 15px;
+}
+
+.btnInfo {
+    width: 100px;
+    border: #7abaff solid 4px;
+}
+
+.submitBtn {
+    width: 200px;
+    background-color: #9fcdff;
+}
+
+.formInput {
+    border: 1px #b9bbbe solid;
+    border-radius: 5px;
+    width: 250px;
+}
+.formInput:focus{
+    outline: none !important;
+    border-bottom: 2px solid #7dd5e9;
+}
+
+.mainHeader {
+    color: #7abaff;
+    padding: 10px;
+    border-bottom: #888888;
+}

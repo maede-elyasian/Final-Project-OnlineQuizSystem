@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher | Add Quiz</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link href="/css/add-new-quiz.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<div class="container p-1 mb-5 justify-content-center align-items-center">
+    <h4>Add New Quiz</h4>
+    <div class="row justify-content-center align-items-center ">
+        <form class="m-1" action="#" th:object="${quiz}" th:action="@{/quiz/__${courseId}__/createQuiz}"
+              method="post">
+            <div class="form-group">
+                <label class="control-label" for="title">Title :</label>
+                <input class="text-center m-2 form-control" type="text" id="title" th:field="*{title}"
+                       placeholder="Title" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="start">Start Date :</label>
+                <input class="text-center m-2 form-control" id="start" type="datetime-local" th:field="*{startDate}"
+                       name="start" placeholder="Start Date" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="end">End Date :</label>
+                <input class="text-center m-2 form-control" id="end" type="datetime-local" th:field="*{endDate}"
+                       placeholder="End Date"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="time">Time(minute):</label>
+                <input class="text-center m-2 form-control" id="time" type="number" th:field="*{time}"
+                       placeholder="Time in minute" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="description">Description:</label>
+                <textarea class="text-center m-2 form-control" id="description" type="text" th:field="*{description}"
+                          placeholder="Description" min="1" required></textarea>
+            </div>
+
+            <input type="hidden" name="teacherId" th:value="${teacherAccount.id}">
+            <input class="btn m-2 w-100" type="submit" id="save-btn" value="Save"/>
+
+        </form>
+    </div>
+</div>
+
+
+<div class="row text-center justify-content-center mt-5">
+    <form class="m-2" th:action="@{/quiz/quizzes/__${courseId}__}">
+        <input class="btn btn-info" type="submit" value="Back">
+    </form>
+</div>
+
+</body>
+</html>

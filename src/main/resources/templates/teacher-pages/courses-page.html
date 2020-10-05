@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher-Courses</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <style>
+        body{
+            font-family: Bbadr;
+        }
+        input[type=submit]{
+            border: 2px solid #7abaff;
+            background-color: #f4f4f4;
+            width: 100px;
+            text-align: center;
+        }
+        .btn:hover{
+            background-color: #b8daff;
+        }
+    </style>
+</head>
+<body class="text-center row p-5 justify-content-center align-content-center">
+
+<div th:if="${teacherCourses == null}" class="text-danger p-5 border text-center">دوره ای جهت نمایش وجود ندارد</div>
+
+
+
+<div>
+    <h1>دوره ها</h1>
+
+<div class="m-3 rounded" th:hidden="${teacherCourses==null}">
+
+
+    <table class="table table-striped text-center border">
+        <tr>
+            <th colspan="1">آزمون های دوره</th>
+            <th>تاریخ اتمام</th>
+            <th>تاریخ شروع</th>
+            <th>عنوان دوره</th>
+            <th>شناسه دوره</th>
+        </tr>
+
+        <tr th:each="course:${teacherCourses}">
+
+            <td>
+                <form th:action="@{/quiz/quizzes/__${course.id}__}">
+                    <input class="btn btn-light" type="submit" th:value="آزمون">
+                </form>
+            </td>
+
+            <td th:text="${course.finishDate}"></td>
+
+            <td th:text="${(course.startDate)}"></td>
+
+            <td th:text="${course.courseTitle}"></td>
+
+            <td th:text="${course.id}"></td>
+
+        </tr>
+    </table>
+
+</div>
+
+
+<div class="row text-center justify-content-center">
+
+    <form class="m-2" th:action="@{/logout}">
+        <input class="btn" type="submit" value="خروج">
+    </form>
+
+
+    <form class="m-2" th:action="@{/teacher/dashboard}">
+        <input class="btn" type="submit" value="داشبورد">
+    </form>
+
+</div>
+
+</div>
+
+</body>
+</html>

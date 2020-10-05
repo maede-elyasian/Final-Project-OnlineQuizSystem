@@ -1,10 +1,8 @@
 package ir.maktab.model.entity;
 
-import ir.maktab.model.enums.RoleTitle;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Entity
@@ -19,8 +17,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private RoleTitle title;
+    private String title;
 
 
 }

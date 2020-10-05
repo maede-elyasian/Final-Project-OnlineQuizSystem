@@ -2,266 +2,151 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>لیست حساب های کاربری</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <title>Admin Dashboard | Users</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
-    <style>
-        body {
-            background: #f4f4f4 !important;
-            font-family: Bbadr;
-        }
-        #main-header{
-            border-bottom:2px solid #f4f4f4;
-            background-color: #50E5C0 !important;
-        }
+    <link rel="stylesheet" href="/css/showAccounts.css" type="text/css">
 
-        /* NAVBAR */
-
-        #navbar li{
-            display:inline;
-            padding-left:20px;
-            list-style:none;
-        }
-
-        .navbar a{
-            text-decoration:none;
-            color:#f4f4f4 !important;
-        }
-
-        .navbar a:hover{
-            color:#56a79a;
-            border-bottom: 2px solid #f4f4f4;
-            padding-bottom:3px;
-        }
-
-        /* Navbar */
-        .navbar {
-            min-height: 33px !important;
-            margin-bottom: 0;
-            border-radius: 0;
-        }
-
-        .navbar-nav > li > a, .navbar-brand {
-            padding-top: 6px !important;
-            padding-bottom: 0 !important;
-            height: 33px;
-        }
-
-        .navbar-default {
-            background-color: #50E5C0;
-            border-color: #50E5C0;
-        }
-
-        .navbar-default .navbar-brand {
-            color: #ecf0f1;
-        }
-
-        .navbar-default .navbar-brand:hover,
-        .navbar-default .navbar-brand:focus {
-            color: #ffbbbc;
-        }
-
-        .navbar-default .navbar-text {
-            color: #ecf0f1;
-        }
-
-        .navbar-default .navbar-nav > li > a {
-            color: #f4f4f4;
-            padding:10px 0;
-        }
-
-        .navbar-default .navbar-nav > li > a:hover,
-        .navbar-default .navbar-nav > li > a:focus {
-            color:#56a79a;
-            border-bottom: 1px solid #56a79a;
-            padding-bottom:3px;
-        }
-
-        .navbar-default .navbar-nav > .active > a,
-        .navbar-default .navbar-nav > .active > a:hover,
-        .navbar-default .navbar-nav > .active > a:focus {
-            color: #f4f4f4;
-
-        }
-
-        .navbar-default .navbar-nav > .open > a,
-        .navbar-default .navbar-nav > .open > a:hover,
-        .navbar-default .navbar-nav > .open > a:focus {
-            color: #ffbbbc;
-            background-color: #50E5C0;
-        }
-
-        .navbar-default .navbar-toggle {
-            border-color: #50E5C0;
-        }
-
-        .navbar-default .navbar-toggle:hover,
-        .navbar-default .navbar-toggle:focus {
-            background-color: fuchsia;
-        }
-
-        .navbar-default .navbar-toggle .icon-bar {
-            background-color: #ecf0f1;
-        }
-
-        .navbar-default .navbar-collapse,
-        .navbar-default .navbar-form {
-            border-color: #888888;
-        }
-
-        /*HEADER*/
-        #header{
-            background:#333333;
-            color:#ffffff;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        /* Custom */
-        .main-color-bg {
-            background-color: #50E5C0 !important;
-            border-bottom:1px solid #f4f4f4 !important;
-            color: #f4f4f4 !important;
-            font-size: 20px;
-
-        }
-
-        /* Footer */
-        #footer {
-            background: #333333;
-            color: #ffffff;
-            text-align: center;
-            padding: 30px;
-            margin-top: 30px;
-        }
-
-        input[type=text]{
-            border: 2px #888888 solid;
-        }
-
-
-    </style>
 </head>
 
 <body class="text-center justify-content-center align-content-center">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-default main-color-bg" id="main-header" dir="rtl">
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav ml-auto">
+<nav class="navbar navbar-expand-md  navbar-default main-color-bg" id="main-header">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
 
-                <a class="nav-link" th:href="@{/admin/adminMenu}"><i class="fa fa-gear"></i> داشبورد </a>
+                <a class="nav-link" th:href="@{/admin/adminMenu}"><i class="fa fa-gear"></i> Dashboard </a>
             </li>
             <li class="nav-item">
 
-                <a class="nav-link" th:href="@{/admin/addCourse}"> <i class="fa fa-book "></i> دوره ها </a>
+                <a class="nav-link" th:href="@{/course/courses-page}"> <i class="fa fa-book "></i> Courses </a>
             </li>
             <li class="nav-item active">
 
-                <a class="nav-link disabled" th:href="@{/admin/allUsers}"> <i class="fa fa-users "></i> کاربران </a>
+                <a class="nav-link disabled" th:href="@{/admin/allUsers}"> <i class="fa fa-users "></i> Users </a>
             </li>
 
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logout"> <i class="fa fa-sign-out text-right"></i> خروج </a></li>
+            <li><a href="/index"> <i class="fa fa-sign-out text-right"></i> Logout </a></li>
         </ul>
     </div>
 </nav>
 
 <div class="border m-5" style="border: #38CEA8 solid 2px">
-    <form th:action="@{/admin/search}" method="post">
+    <form th:action="@{/admin/search}" method="post" class="form-inline">
 
-        <div class="p-1 m-1 mb-3 row  w-auto justify-content-center  rounded" dir="rtl">
+        <div class="p-1 m-1 mb-3 row  w-auto justify-content-center align-items-center rounded">
 
-            <input class="text-center rounded m-2"
-                   type="text"
-                   th:field="*{search.nationalCode}"
-                   placeholder="کد ملی"/>
-
-            <input class="text-center rounded m-2"
+            <input class="text-center form-control m-2"
                    type="text" th:field="*{search.firstName}"
-                   placeholder="نام"/>
+                   placeholder="Name"/>
 
-            <input class="text-center rounded m-2"
+            <input class="text-center form-control m-2"
                    type="text" th:field="*{search.lastName}"
-                   placeholder="نام خانوادگی"/>
+                   placeholder="Last name"/>
 
-            <select class="custom-select w-auto m-2" th:field="*{search.role}">
-                <option th:value="null" th:text="نقش"></option>
-                <option th:each="role:${roles}"
-                        th:value="${role.title.name()}"
-                        th:text="${role.title.getPersian()}">
-                </option>
-            </select>
+            <input class="text-center form-control m-2"
+                   type="text" th:field="*{search.email}"
+                   placeholder="email"/>
 
-            <select class="custom-select w-auto m-2" th:field="*{search.status}">
-                <option th:value="null" th:text="وضعیت"></option>
+            <select class="custom-select text-center w-60 m-2" th:field="*{search.status}">
+                <option th:value="null" th:text="Status"></option>
                 <option th:each="status:${statuses}"
-                        th:value="${status.title.name()}"
-                        th:text="${status.title.getPersian()}">
+                        th:value="${status.title}"
+                        th:text="${status.title}">
                 </option>
             </select>
 
-            <input class="btn m-2 btn-dark" type="submit" value="جستجو"/>
+            <select class="custom-select text-center w-60 m-2" th:field="*{search.role}">
+                <option th:value="null" th:text="Role"></option>
+                <option th:each="role:${roles}"
+                        th:value="${role.title}"
+                        th:text="${role.title}">
+                </option>
+            </select>
+
+            <input class="btn m-2 actionBtn" type="submit" value="Search"/>
 
         </div>
     </form>
 </div>
 
-<section>
+<section th:hidden="${accounts.isEmpty() || accounts == null}">
     <div class="container m-5">
         <div class="col-sm-12 justify-content-center ">
-            <table class="table table-hover text-center border ">
+            <table class="table table-striped table-hover text-center border">
                 <thead>
-                <tr class="table-active">
-                    <th colspan="2">عملیات</th>
-                    <th>نقش</th>
-                    <th>وضعیت</th>
-                    <th>ایمیل</th>
-                    <th>شماره تماس</th>
-                    <th>نام خانوادگی</th>
-                    <th>نام</th>
-                    <th>کد ملی</th>
-                    <th>نام کاربری</th>
+                <tr>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>MobileNumber</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th colspan="2">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="account : ${accounts}">
+                    <td th:text="${account.personalInfo.firstName}"></td>
+                    <td th:text="${account.personalInfo.lastName}"></td>
+                    <td th:text="${account.personalInfo.phoneNumber}"></td>
+                    <td th:text="${account.personalInfo.email}"></td>
+                    <td th:text="${account.username}"></td>
+                    <td th:text="${account.role.title}"></td>
+                    <td th:text="${account.status.title}"></td>
 
                     <td>
                         <form action="#" th:action="@{/admin/accountActivation/__${account.getId()}__}">
-                            <input class="btn btn-success"
-                                   type="submit" th:value="${account.status.title.name()=='ACTIVE'?'غیرفعال کردن':'فعال کردن'}">
+                            <input class="btn actionBtn"
+                                   type="submit"
+                                   th:value="${account.status.title=='ACTIVE'?' Deactive':'Active'}">
                         </form>
                     </td>
 
                     <td>
                         <form action="#" th:action="@{/admin/editAccount/__${account.id}__}">
-                            <input class="btn btn-secondary" type="submit" value="ویرایش">
+                            <input class="btn actionBtn" type="submit" value="Edit">
                         </form>
                     </td>
-                    <td th:text="${account.role.title.getPersian()}"></td>
-                    <td th:text="${account.status.title.getPersian()}"></td>
-                    <td th:text="${account.personalInfo.email}"></td>
-                    <td th:text="${account.personalInfo.phoneNumber}"></td>
-                    <td th:text="${account.personalInfo.lastName}"></td>
-                    <td th:text="${account.personalInfo.firstName}"></td>
-                    <td th:text="${account.personalInfo.nationalCode}"></td>
-                    <td th:text="${account.username}"></td>
+
                 </tr>
                 </tbody>
             </table>
+            <nav aria-label="Pagination" th:if="${accounts.totalPages gt 0}">
+                <ul class="pagination justify-content-center font-weight-bold">
+                    <li class="page-item" th:classappend="${accounts.number eq 0} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/allUsers(page=${accounts.number lt 2 ? 1 : accounts.number})}"
+                           aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${i eq accounts.number + 1} ? 'active'"
+                        th:each="i : ${#numbers.sequence( 1, accounts.totalPages, 1)}">
+                        <a class="page-link" th:href="@{/admin/allUsers(page=${i})}" th:text="${i}"
+                           th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${accounts.number + 1 eq accounts.totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/allUsers(page=${accounts.number + 2})}"
+                           aria-label="Next" title="Next Page" data-toggle="tooltip">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+
+                    </li>
+                </ul>
+            </nav>
+
         </div>
     </div>
 </section>
-
-
-<footer id="footer">
-    <p dir="rtl">سامانه آزمون آنلاین &copy; 1399</p>
-</footer>
 
 
 </body>

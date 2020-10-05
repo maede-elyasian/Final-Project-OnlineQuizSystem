@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher | Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/teacher-dashboard.css" type="text/css">
+</head>
+<body class="justify-content-center">
+<nav class="navbar navbar-expand-lg">
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">My Courses<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/teacher/profile/__${teacherAccount.id}__}">My profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">My Exams</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a class="btn  my-2 my-sm-0" type="submit" href="/index">Logout</a>
+        </form>
+    </div>
+
+</nav>
+
+<div th:if="${teacherCourses == null}" class="text-danger p-5 border text-center">No Course Available!</div>
+
+    <div class="m-3" th:hidden="${teacherCourses==null}">
+            <table class="table table-striped text-center w-60 mt-5">
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Start Date</th>
+                    <th>Finish Date</th>
+                    <th>Classification</th>
+                    <th colspan="1">Quizzes</th>
+                </tr>
+
+                <tr th:each="course:${teacherCourses}">
+                    <td th:text="${course.id}"></td>
+
+                    <td th:text="${course.courseTitle}"></td>
+                    <td th:text="${(course.startDate)}"></td>
+                    <td th:text="${course.endDate}"></td>
+                    <td th:text="${course.classification.title}"></td>
+                    <td>
+                        <form th:action="@{/quiz/quizzes/__${course.id}__}">
+                            <input class="btn exam_btn" type="submit" value="Quiz">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+    </div>
+<nav aria-label="Pagination" th:if="${teacherCourses.totalPages gt 0}">
+    <ul class="pagination justify-content-center font-weight-bold">
+        <li class="page-item" th:classappend="${teacherCourses.number eq 0} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{/teacher/courses(page=${teacherCourses.number lt 2 ? 1 : teacherCourses.number})}"
+               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item" th:classappend="${i eq teacherCourses.number + 1} ? 'active'"
+            th:each="i : ${#numbers.sequence( 1, teacherCourses.totalPages, 1)}">
+            <a class="page-link" th:href="@{/teacher/courses(page=${i})}" th:text="${i}"
+               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+        </li>
+        <li class="page-item" th:classappend="${teacherCourses.number + 1 eq teacherCourses.totalPages} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{/teacher/courses(page=${teacherCourses.number + 2})}"
+               aria-label="Next" title="Next Page" data-toggle="tooltip">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+
+        </li>
+    </ul>
+</nav>
+
+
+</body>
+</html>

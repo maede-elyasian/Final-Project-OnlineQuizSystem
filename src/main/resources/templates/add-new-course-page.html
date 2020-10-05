@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Add New Course</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link href="/css/add-course.css" rel="stylesheet" type="text/css" >
+</head>
+<body>
+
+<div class="container p-1 mb-5 justify-content-center align-items-center">
+    <h4>Add New Course</h4>
+    <div class="row justify-content-center align-items-center text-center">
+        <form action="#" th:action="@{/course/addCourse}" method="post" class="m-1" th:object="${course}">
+            <label class="control-label" for="title">Title :</label>
+            <input class="text-center m-2 form-control" id="title" type="text" th:field="*{courseTitle}" required/>
+
+            <label class="control-label" for="start-date">Start Date :</label>
+            <input class="text-center m-2 form-control" id="start-date" type="date" required th:field="*{startDate}"/>
+
+            <label class="control-label" for="end-date">End Date :</label>
+            <input class="text-center m-2 form-control" id="end-date" type="date" required th:field="*{endDate}"/>
+
+            <label class="control-label" for="classification">Classification :</label>
+            <select class="custom-select m-2 form-control text-center" id="classification" required th:field="*{classification.title}">
+                <option th:each="classification:${classifications}"
+                        th:text="${classification.title}"
+                        th:value="${classification.title}"></option>
+            </select>
+            <input class="btn save-btn m-2 w-100" type="submit" value="save"/>
+        </form>
+
+    </div>
+</div>
+
+<div class="row text-center justify-content-center mt-5">
+    <form class="m-2" th:action="@{/course/courses-page}">
+        <input class="btn btn-info" type="submit" value="Back">
+    </form>
+</div>
+
+</body>
+</html>

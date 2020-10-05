@@ -30,12 +30,7 @@ public class PersonalInfo {
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(unique = true, nullable = false)
-    private String nationalCode;
-
-    @OneToOne(mappedBy = "personalInfo")
-    private Account account;
-
-
+//    @OneToOne(mappedBy = "personalInfo")
+//    private Account account;
 
 }

@@ -1,0 +1,21 @@
+.examBtn{
+    width: 75px;
+    background-color: #9fcdff;
+    color: #ffffff;
+}
+
+.examBtn:hover{
+    background-color: #8BECEC;
+}
+nav{
+    background-color: #DEF7F7;
+    color: #9fcdff;
+    border-bottom: 3px solid #9fcdff;
+}
+
+.navbar a{
+    color: #9fcdff;
+}
+.navbar a:hover{
+    color: #bee5eb;
+}

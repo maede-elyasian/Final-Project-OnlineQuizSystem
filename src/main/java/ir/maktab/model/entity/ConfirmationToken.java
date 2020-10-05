@@ -25,7 +25,7 @@ public class ConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
     private Account account;
 

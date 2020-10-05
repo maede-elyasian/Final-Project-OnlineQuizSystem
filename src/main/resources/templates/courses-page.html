@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | AddCourse</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link href="/css/showAccounts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="/js/removeCourse.js" type="text/javascript"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-default main-color-bg" id="main-header">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/adminMenu}"><i class="fa fa-gear"></i> Dashboard </a>
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link disabled" th:href="@{/admin/addCourse}"> <i class="fa fa-book "></i> Courses </a>
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link " th:href="@{/admin/allUsers}"> <i class="fa fa-users "></i> Users </a>
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link " th:href="@{/course/add-new-course}"> <i class="fas fa-chalkboard"></i> Add New Course </a>
+            </li>
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/index"> <i class="fa fa-sign-out text-right"></i> Logout </a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<section th:hidden="${allCourses==null || allCourses.isEmpty() }">
+    <div class="container m-5">
+        <div class="col-sm-12 justify-content-center ">
+            <table class="table table-hover text-center border" id="courseTable">
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Classification</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th colspan="4">Actions</th>
+                </tr>
+
+                <tr th:each="course:${allCourses}">
+                    <td th:text="${course.id}"></td>
+                    <td th:text="${course.courseTitle}"></td>
+                    <td th:text="${course.classification.title}"></td>
+                    <td th:text="${course.startDate}"></td>
+                    <td th:text="${course.endDate}"></td>
+                    <td>
+                        <form th:action="@{/course/editCourse/__${course.id}__}" method="get">
+                            <input type="submit" class="btn actionBtn" th:value="Edit">
+                        </form>
+                    </td>
+
+                    <td>
+                        <button id="delete" th:value="${course.id}" class="btn btn_delete actionBtn" data-toggle="modal"
+                                data-target="#delete-modal" &times>Delete</button>
+                    </td>
+
+                    <td>
+                        <form th:action="@{/course/courseMembers/__${course.id}__}">
+                            <input type="submit" class="btn actionBtn text-center" th:value="Members">
+                        </form>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <nav aria-label="Pagination" th:if="${allCourses.totalPages gt 0}">
+            <ul class="pagination justify-content-center font-weight-bold">
+                <li class="page-item" th:classappend="${allCourses.number eq 0} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/course/addCourse(page=${allCourses.number lt 2 ? 1 : allCourses.number})}"
+                       aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${i eq allCourses.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, allCourses.totalPages, 1)}">
+                    <a class="page-link" th:href="@{/course/addCourse(page=${i})}" th:text="${i}"
+                       th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                </li>
+                <li class="page-item" th:classappend="${allCourses.number + 1 eq allCourses.totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/course/addCourse(page=${allCourses.number + 2})}"
+                       aria-label="Next" title="Next Page" data-toggle="tooltip">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</section>
+
+<div class="modal fade" id="delete-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Delete!</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn" style="background-color: #91DFEB" id="model-delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

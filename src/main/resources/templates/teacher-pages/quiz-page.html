@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher | Quizzes</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/quiz-page.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/quiz-page.js"></script>
+    <script type="text/javascript" src="/js/updateQuiz.js"></script>
+    <script src="/js/removeQuiz.js"></script>
+</head>
+<body class="text-center row p-5 justify-content-center align-content-center">
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Exams</a>
+        </li>
+        <!--        <li class="nav-item dropdown">-->
+        <!--            <a class="nav-link dropdown-toggle" data-toggle="dropdown" th:href="@{/quiz/quizzes/__${courseId}__}">-->
+        <!--                All Exams</a>-->
+        <!--            <div class="dropdown-menu">-->
+        <!--                <a class="dropdown-item" th:href="@{/quiz/myQuizzes/__${courseId}__}">My Exams</a>-->
+        <!--            </div>-->
+        <!--        </li>-->
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/teacher/courses}">Courses</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/quiz/__${courseId}__/createQuiz}">Add New Quiz</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="/index">Exit</a>
+        </li>
+    </ul>
+</div>
+
+<div>
+
+    <div id="responseAlert" style="display:none; margin:10px">
+    </div>
+    <input type="hidden" id="courseId" th:value="${courseId}">
+    <input type="hidden" id="teacherAccount" th:value="${teacherAccount.id}">
+<!--    <table id="quizTable" class="table table-hover mt-4">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>Title</th>-->
+<!--            <th>Start Date</th>-->
+<!--            <th>End Date</th>-->
+<!--            <th>Description</th>-->
+<!--            <th>Time</th>-->
+<!--            <th>Creator</th>-->
+<!--            <th colspan="4">Actions</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+<!--    <ul class="pagination justify-content-center" style="margin:20px 0">-->
+<!--    </ul>-->
+        <div class="m-3 rounded" th:disabled="${quizList==null}">
+            <table class="table table-striped text-center" th:if="${quizList!=null}" id="quizTable">
+                <tr>
+                    <th>Title</th>
+                    <th>Start</th>
+                    <th>End</th>
+<!--                    <th>Creator</th>-->
+                    <th>Time</th>
+                    <th>Description</th>
+                    <th colspan="4">Actions</th>
+                </tr>
+                <tr th:each="quizItem:${quizList}" th:disabled="${quizItem.startDate.equals(quizItem.endDate)}" th:id="${quizItem.id}" >
+                    <td th:text="${quizItem.title}" class="td_title"></td>
+                    <td th:text="${quizItem.startDate}" class="td_start_date"></td>
+                    <td th:text="${quizItem.endDate}" class="td_end_date"></td>
+<!--                    <td th:text="${quizItem.teacher.username}"></td>-->
+                    <td th:text="${quizItem.time}" class="td_time"></td>
+                    <td th:text="${quizItem.description}" class="td_description"></td>
+
+                    <td th:disabled="${quizItem.teacher.id != teacherAccount.id}">
+                        <button id="delete" type="button" th:value="${quizItem.id}" class="btn btn_delete"
+                                data-toggle="modal" data-target="#delete-modal"
+                                th:disabled="${quizItem.teacher.id != teacherAccount.id || quizItem.stop}">
+<!--                            <i class="fa fa-trash-o" data-toggle="tooltip" title="remove"></i>-->
+                            delete
+                        </button>
+                    </td>
+
+                    <td>
+                        <button id="stop" type="button" class="btn btn_stop" th:value="${quizItem.id}"
+                                th:disabled="${quizItem.stop || quizItem.teacher.id != teacherAccount.id}">
+<!--                           <i class="fa fa-ban" data-toggle="tooltip" title="stop"></i>-->
+                            stop
+                        </button>
+
+                    </td>
+
+                    <td>
+                        <button id="edit" type="button" class="btn btn_edit" th:value="${quizItem.id}"
+                                th:disabled="${quizItem.teacher.id != teacherAccount.id || quizItem.stop}">
+<!--                            <i class="fa fa-edit" data-toggle="tooltip" title="edit"></i>-->
+                            edit
+                        </button>
+                    </td>
+
+                    <td>
+                        <a id="questions" type="button" class="btn" th:href="@{/question/__${quizItem.id}__/questionPage}">
+<!--                            <i class="fas fa-chalkboard" data-toggle="tooltip" title="questions"></i>-->
+                            question
+                        </a>
+                    </td>
+
+                </tr>
+            </table>
+            <nav aria-label="Pagination" th:if="${quizList.totalPages gt 0}">
+                <ul class="pagination justify-content-center font-weight-bold">
+                    <li class="page-item" th:classappend="${quizList.number eq 0} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/quiz/quizzes/__${courseId}__/(page=${quizList.number lt 2 ? 1 : quizList.number})}"
+                           aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${i eq quizList.number + 1} ? 'active'"
+                        th:each="i : ${#numbers.sequence( 1, quizList.totalPages, 1)}">
+                        <a class="page-link" th:href="@{/quiz/quizzes/__${courseId}__/(page=${i})}" th:text="${i}"
+                           th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${quizList.number + 1 eq quizList.totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/quiz/quizzes/__${courseId}__/(page=${quizList.number + 2})}"
+                           aria-label="Next" title="Next Page" data-toggle="tooltip">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+
+                    </li>
+                </ul>
+            </nav>
+</div>
+</div>
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div style="display: none;background-color:#e6fffa; padding:10px; border-radius:3px;width: 380px;"
+             id="div_customer_updating">
+            <span style="cursor: pointer;display: none" class="pull-right clickable close-icon" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+
+            <form id="update_customer_form">
+                <div class="form-group" aria-hidden="true">
+                    <label hidden for="quiz_id">Id:</label>
+                    <input hidden type="text" class="form-control" id="quiz_id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" placeholder="Enter title" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="start_date">Start Date:</label>
+                    <input type="datetime-local" class="form-control" placeholder="Enter Start Date" id="start_date">
+                </div>
+                <div class="form-group">
+                    <label for="start_date">End Date:</label>
+                    <input type="datetime-local" class="form-control" placeholder="Enter End Date" id="end_date">
+                </div>
+                <div class="form-group">
+                    <label for="time">Time:</label>
+                    <input type="text" class="form-control" placeholder="Enter Time" id="time">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="text-center m-2 form-control" id="description" type="text"
+                              placeholder="Description..." min="1" required></textarea>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="text-center btn h-100" style="background-color: #91DFEB;width: 85px">Submit</button>
+                </div>
+            </form>
+            <div id="response" style="display:none; margin:10px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Delete!</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn" id="model-delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.close-icon').on('click',function() {
+        $(this).closest('.div').fadeOut();
+        location.reload();
+    })
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    // function show_date() {
+    //     let start = $('#quizTable .td_start_date').text().replace('T',' ');
+    //     let end = $('#quizTable').find('.td_end_date').text().replace('T',' ');
+    //
+    //     $('#quizTable .td_start_date').text(start);
+    //     $('#quizTable .td_end_date').text(end);
+    // }
+    //
+    // window.onload = function () {
+    //    show_date();
+    // }
+
+
+</script>
+
+</body>
+</html>

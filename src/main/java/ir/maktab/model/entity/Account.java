@@ -1,5 +1,6 @@
 package ir.maktab.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Account {
     private String username;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     private boolean isEnabled;
@@ -26,13 +28,15 @@ public class Account {
     @ManyToOne
     private Status status;
 
-
     @OneToOne
     private Role role;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personal_info_id",referencedColumnName = "id")
     private PersonalInfo personalInfo;
+
+    @ManyToMany
+    private List<Course> courseList;
 
 
     @Override
@@ -53,7 +57,6 @@ public class Account {
         return "Account{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", isEnabled=" + isEnabled +
                 ", status=" + status +
                 ", role=" + role +

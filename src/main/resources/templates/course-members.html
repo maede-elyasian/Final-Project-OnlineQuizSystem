@@ -2,25 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>اعضای دوره</title>
+        <title>Admin | Course Members</title>
         <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
-    </head>
-<body style="font-family: Bbadr;">
+        <link href="/css/add-member.css" rel="stylesheet" type="text/css">
 
-<div class="border ml-auto mt-5 justify-content-center container" style="border: #38CEA8 solid 2px; width: 40%">
-<div class="row justify-content-center">
-    <form th:action="@{/admin/addMemberToCourse/__${courseInfo.id}__}" method="post">
-        <input type="submit" value="افزودن به دوره" class="btn btn-success">
+    </head>
+<body>
+<div  class="main row mx-auto justify-content-center align-items-center">
+    <h3 class="p-2">Course Members</h3>
+</div>
+
+<div class="border mt-5 container row mx-auto justify-content-center align-items-center" style="width: 50%" >
+<div class="row">
+    <form th:action="@{/course/addMemberToCourse/__${courseInfo.id}__}" method="post">
 
         <select class="custom-select w-auto m-2" required th:name="memberRole">
             <option th:each="role:${roles}"
-                    th:if="${role.title.name() != 'ADMIN'}"
-                    th:text="${role.title.persian}"
-                    th:value="${role.title}"
-
-            ></option>
+                    th:if="${role.title != 'ADMIN'}"
+                    th:text="${role.title}"
+                    th:value="${role.title}"></option>
         </select>
-
+        <input type="submit" value="Add" class="btn save_btn">
     </form>
 </div>
 </div>
@@ -28,30 +30,30 @@
 <section>
     <div class="container m-5">
         <div class="col-sm-12 justify-content-center ">
-            <table class="table table-striped text-center border" dir="rtl">
+            <table class="table table-striped text-center border">
                 <tr>
-                    <th>نام</th>
-                    <th>نام خانوادگی</th>
-                    <th>نام کاربری</th>
-                    <th>نقش</th>
-                    <th colspan="2">عملیات</th>
+                    <th>Name</th>
+                    <th>Last name</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th colspan="2">Actions</th>
                 </tr>
 
                 <tr th:each="student:${courseInfo.students}">
                     <td th:text="${student.personalInfo.firstName}"></td>
                     <td th:text="${student.personalInfo.lastName}"></td>
                     <td th:text="${student.username}"></td>
-                    <td th:text="${student.role.title.persian}"></td>
+                    <td th:text="Student"></td>
 
                     <td>
-                        <form th:action="@{/admin/deleteCourseMember/__${courseInfo.id}__}">
-                            <input type="text" hidden th:name="memberId" th:value="${student.id}">
+                        <form th:action="@{/course/deleteCourseMember/__${courseInfo.id}__}">
+                            <input type="number" hidden th:name="memberId" th:value="${student.id}">
                             <input type="text" hidden th:name="memberRole" th:value="STUDENT">
-                            <input type="submit" class="btn btn-danger" hidden th:id="${student.id}" value=" تایید حذف">
+                            <input type="submit" class="btn btn-secondary" hidden th:id="${student.id}" value="Confirm">
                         </form>
                     </td>
 
-                    <td><button class="btn btn-warning" th:onclick="|deleteConfirm(${student.id})|">حذف</button></td>
+                    <td><button class="btn delete_btn" th:onclick="|deleteConfirm(${student.id})|">Delete</button></td>
 
                 </tr>
 
@@ -59,31 +61,28 @@
                     <td th:text="${teacher.personalInfo.firstName}"></td>
                     <td th:text="${teacher.personalInfo.lastName}"></td>
                     <td th:text="${teacher.username}"></td>
-                    <td th:text="${teacher.role.title.persian}"></td>
+                    <td th:text="Teacher"></td>
 
                     <td>
-                        <form th:action="@{/admin/deleteCourseMember/__${teacher.id}__}">
-                            <input type="submit" class="btn btn-danger" hidden th:id="${teacher.id}" value=" تایید حذف">
+                        <form th:action="@{/course/deleteCourseMember/__${teacher.id}__}">
+                            <input type="submit" class="btn " hidden th:id="${teacher.id}" value="Confirm">
                         </form>
                     </td>
 
-                    <td><button class="btn btn-warning" th:onclick="|deleteConfirm(${teacher.id})|">حذف</button></td>
+                    <td><button class="btn delete_btn" th:onclick="|deleteConfirm(${teacher.id})|">Delete</button></td>
                 </tr>
 
             </table>
+
         </div>
     </div>
 </section>
 
 <div class="container">
     <div class="row ml-auto mt-4 justify-content-center">
-        <a th:href="@{/admin/addCourse}" class="btn btn-dark">بازگشت</a>
+        <a th:href="@{/course/courses-page}" class="btn back">Back</a>
     </div>
 </div>
-
-
-
-
 
 <script>
     function deleteConfirm(id) {

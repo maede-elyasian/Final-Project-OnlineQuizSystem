@@ -1,19 +1,19 @@
 package ir.maktab.dto;
 
-import lombok.*;
+import ir.maktab.model.entity.Course;
+import ir.maktab.model.entity.Quiz;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.List;
 
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@AllArgsConstructor
 public class CourseDto {
-
-    private Long id;
-    private String courseTitle;
-    private String lessonTitle;
-    private String startDate;
-    private String finishDate;
+    private List<Course> courseList;
+    private int totalPages;
+    private int pageNumber;
+    private int pageSize;
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student | Courses</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/student-courses.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="/js/student-courses.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">My Courses<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/student/profile/__${student.id}__}">My profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">My Exams</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a class="btn  my-2 my-sm-0" type="submit" href="/index">Logout</a>
+        </form>
+    </div>
+</nav>
+
+<input type="hidden" th:value="${student.id}" id="studentId">
+
+<div class="container">
+    <table id="course_table" class="table table-hover mt-4 w-60 border">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Classification</th>
+            <th>Exams</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<ul class="pagination justify-content-center" style="margin:20px 0"></ul>
+
+</body>
+</html>

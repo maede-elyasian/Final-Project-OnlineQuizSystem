@@ -1,0 +1,15 @@
+.main {
+    width: 50%;
+    background-color: #DEF7F7;
+    border-radius: 10px;
+    color: #888888;
+}
+
+.btn_add {
+    width: 70px;
+    background-color: #9fcdff;
+}
+
+.btn_add:hover {
+    background-color: #bee5eb;
+}

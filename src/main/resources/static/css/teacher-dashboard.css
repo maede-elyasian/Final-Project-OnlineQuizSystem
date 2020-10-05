@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    height: 100%;
+    font-family: Helvetica, sans-serif;
+}
+
+.exam_btn {
+    background-color: #91DFEB;
+    width: 75px;
+}
+
+.exam_btn:hover {
+    background-color: #C2F8FF;
+}
+
+.navbar {
+    background-color: #F6FEFF;
+    color: #9fcdff;
+    border-bottom: 2px solid #D8FCFF;
+}
+
+.navbar a {
+    color: #9fcdff;
+}
+
+.navbar a:hover {
+    color: #bee5eb;
+}

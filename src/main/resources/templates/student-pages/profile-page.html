@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student | Profile</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="container border">
+    <p><i class="fa fa-user-circle-o"></i>Name : <span th:text="${account.personalInfo.firstName}"></span></p>
+    <p>Last name : <span th:text="${account.personalInfo.lastName}"></span></p>
+    <p>Username : <span th:text="${account.username}"></span></p>
+    <p>email : <span th:text="${account.personalInfo.email}"></span></p>
+    <p>Phone number : <span th:text="${account.personalInfo.phoneNumber}"></span></p>
+    <p>Status : <span th:text="${account.status}"></span></p>
+</div>
+
+</body>
+</html>

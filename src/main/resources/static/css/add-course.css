@@ -1,0 +1,26 @@
+body{
+    background-color: #DEF7F7;
+}
+.container{
+    border: #6CDEF9 solid 3px;
+    border-radius: 20px;
+    width: 350px;
+    height: 470px;
+    box-shadow: 2px 3px #888888;
+    background-color: white;
+    margin-top: 60px;
+}
+h4{
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: #6CDEF9 solid 2px;
+    border-radius: 4px;
+    color: #888888;
+}
+.save-btn{
+    background-color: #6CDEF9;
+}
+.save-btn:hover{
+    background-color: #7dd5e9;
+    color: white;
+}

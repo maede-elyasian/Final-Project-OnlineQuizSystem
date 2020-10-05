@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher | Questions</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link href="/css/question-page.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!--    <script src="/js/questions-page.js"></script>-->
+    <script src="/js/removeQuestion.js"></script>
+</head>
+<body class="row justify-content-center align-content-center">
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Questions</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#">Add New Question</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" th:href="@{/question/__${quizId}__/addFromBank}">Question Bank</a>
+                <a class="dropdown-item" th:href="@{/question/addDescriptive/__${quizId}__}">Descriptive Question</a>
+                <a class="dropdown-item" th:href="@{/question/addMultiple/__${quizId}__}">Multiple Choice Question</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/teacher/courses}">Courses</a>
+        </li>
+
+        <!--        <li class="nav-item">-->
+        <!--            <a class="nav-link" th:href="@{/quiz/quizzes/__${quizId}__}">Exams</a>-->
+        <!--        </li>-->
+
+        <li class="nav-item">
+            <a class="nav-link " href="/index">Exit</a>
+        </li>
+    </ul>
+</div>
+<input type="hidden" th:value="${quizId}" id="quizId">
+
+<div id="response" style="display:none; margin:10px"></div>
+
+<div class="container pt-4">
+    <table class="table table-striped text-center" id="questionTable" width="60%">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Question</th>
+            <th>Point</th>
+            <th colspan="2">Action</th>
+        </tr>
+        </thead>
+
+        <tbody></tbody>
+    </table>
+</div>
+
+<div class="p-2" style="background-color: #b8daff; width: 150px; height: 50px; border-radius: 10px;">
+    <p class="text-center">Total points : <span id="total_point"></span></p>
+</div>
+
+<div class="modal fade" id="delete-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Delete!</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn_delete" id="model-delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    window.onload = function () {
+        getQuizMaxPoint();
+    }
+
+    function getQuizMaxPoint() {
+        let quizId = $("#quizId").val();
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("total_point").textContent = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/quiz/totalPoint/" + quizId, true);
+        xhttp.send();
+    }
+
+    $(document).ready(function () {
+        let quizId = $("#quizId").attr('value');
+        $.ajax({
+            type: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            url: '/question/getQuestions/' + quizId,
+            dataType: "json",
+            success: function (response) {
+                $('#questionTable tbody').empty();
+                for (let item in response) {
+                    console.log(item, response[item]);
+                    var question = JSON.parse(item);
+                    let editBtn = '<button value="' + question.id + '" class="btn btn_edit">Edit</button>';
+                    let saveBtn = '<span style="display: none" class="btn_save"><button href="#" id="save_btn" class="btn btn-link" value="' + question.id + '">Save</button>|</span> ';
+                    let cancelBtn = '<span style="display: none" class="btn_cancel"><button  href="#" class="btn btn-link">Cancel</button></span> ';
+                    let deleteBtn = '<button id="delete"' +
+                        ' type="button" value="' + question.id + '" class="btn btn_delete" data-toggle="modal" data-target="#delete-modal"' +
+                        '>Delete</button>';
+
+                    let tr_id = question.id;
+                    let questionRow = '<tr id=\"' + tr_id + "\"" + '>' +
+                        '<td class="row_data" contenteditable="true" id="title">' + question.title + '</td>' +
+                        '<td class="row_data" contenteditable="true" id="content">' + question.content + '</td>' +
+                        '<td class="row_data" contenteditable="true" id="point">' + response[item] + '</td>' +
+                        '<td>' + editBtn + saveBtn + cancelBtn + '</td>' +
+                        '<td>' + deleteBtn + '</td>' +
+                        '</tr>';
+                    $('#questionTable tbody').append(questionRow);
+                }
+
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    });
+
+    $(document).on('click', '#questionTable .btn_edit', function () {
+        let tbl_row = $(this).closest('tr');
+        tbl_row.find('.btn_save').show();
+        tbl_row.find('.btn_cancel').show();
+        tbl_row.find('.btn_edit').hide();
+    })
+
+    $(document).on('click', '#questionTable .btn_cancel', function (event) {
+        event.preventDefault();
+        let tbl_row = $(this).closest('tr');
+        tbl_row.find('.btn_save').hide();
+        tbl_row.find('.btn_cancel').hide();
+        tbl_row.find('.btn_edit').show();
+    });
+
+    $(document).on('click', '#questionTable .btn_save', function () {
+        let quizId = $('#quizId').val();
+        let tbl_row = $(this).closest('tr');
+        let tbl_data = tbl_row.find('td');
+        let questionId = tbl_row.find('#save_btn').attr('value');
+        console.log("save btn question id: " + questionId);
+        let formData = {
+            id: questionId,
+            title: tbl_data[0].textContent,
+            content: tbl_data[1].textContent,
+        }
+        console.log(formData + ' form data');
+
+        $.ajax({
+            url: '/question/edit/' + quizId + "?point=" + tbl_data[2].textContent,
+            method: 'PUT',
+            data: JSON.stringify(formData),
+            contentType: 'application/json; charset=utf-8',
+            async: false,
+            cache: false,
+            success: function (response) {
+                getQuizMaxPoint();
+
+                let successAlert = '<div class="alert alert-success alert-dismissible">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>' + response + '</strong></div>';
+
+                $("#response").empty();
+                $("#response").append(successAlert);
+                $("#response").css({"display": "block"});
+            },
+            error: function () {
+                console.log();
+                alert("error")
+            }
+        });
+
+    })
+
+</script>
+
+</body>
+</html>

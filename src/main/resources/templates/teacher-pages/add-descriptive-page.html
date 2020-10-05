@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Descriptive Question</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/descriptive-question.css}" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<div class="container p-3">
+    <h4>Add Descriptive Question</h4>
+    <div class="row justify-content-center align-items-center ">
+        <form class="m-3" action="#" th:object="${question}"
+              th:action="@{/question/addDescriptiveQuestion/__${quizId}__}"
+              method="post">
+            <input class="text-center m-2 form-control" type="text" th:field="*{title}" placeholder="Title" required/>
+            <input class="text-center m-2 form-control" type="text" th:field="*{content}" placeholder="Content"
+                   required/>
+            <input class="text-center m-2 form-control" step=any type="number" name="point" placeholder="point"
+                   required>
+            <p align="center">Add to question bank?</p>
+
+            <div align="center">
+                <label class="form-check-label" for="yes">Yes</label>
+                <input type="radio" value="Yes" name="addToBank" id="yes">
+
+                <label class="form-check-label" for="no">No</label>
+                <input  type="radio" value="No" name="addToBank" id="no">
+            </div>
+
+            <input class="btn saveBtn m-2 w-100" type="submit" value="Save"/>
+        </form>
+    </div>
+</div>
+
+<div class="row text-center justify-content-center mt-5">
+    <form class="m-2" th:action="@{/question/__${quizId}__/questionPage}">
+        <input class="btn btn-info" type="submit" value="Back To Questions">
+    </form>
+</div>
+
+</body>
+</html>

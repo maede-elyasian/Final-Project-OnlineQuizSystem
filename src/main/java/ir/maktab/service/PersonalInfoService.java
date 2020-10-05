@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Service
 public class PersonalInfoService {
-    @Autowired
     private PersonalInfoRepository personalInfoRepository;
+
+    @Autowired
+    public PersonalInfoService(PersonalInfoRepository personalInfoRepository) {
+        this.personalInfoRepository = personalInfoRepository;
+    }
 
     public PersonalInfo emailExist(String email) {
         Optional<PersonalInfo> found = personalInfoRepository.findByEmail(email);
@@ -30,11 +34,4 @@ public class PersonalInfoService {
         return personalInfoRepository.findAll();
     }
 
-    public PersonalInfo findByNationalCode(String natinalCode){
-        Optional<PersonalInfo> found = personalInfoRepository.findByNationalCode(natinalCode);
-        if (found.isPresent()){
-            return found.get();
-        }
-        return null;
-    }
 }

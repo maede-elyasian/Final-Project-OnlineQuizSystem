@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Add Member To Course</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link href="/css/add-member.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="main pt-3 row mx-auto justify-content-center align-items-center"><h3 class="text-center p-2">Add Member To Course</h3></div>
+
+<section>
+    <div class="container m-5">
+        <div class="col-sm-12 justify-content-center ">
+            <table class="table table-striped text-center border w-70">
+                <tr>
+                    <th>Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+
+                <tr th:each="account:${accounts}">
+                    <td th:text="${account.personalInfo.firstName}"></td>
+                    <td th:text="${account.personalInfo.lastName}"></td>
+                    <td th:text="${account.username}"></td>
+                    <td th:text="${account.role.title}"></td>
+
+                    <td>
+                        <form th:action="@{/course/addMembersToCourse/__${courseInfo.id}__}" method="post">
+                            <input type="text" hidden th:name="memberId" th:value="${account.id}">
+                            <input type="text" hidden th:name="role" th:value="${role}">
+                            <input
+                                    class="btn" style="background-color: #91DFEB;width: 80px"
+                                   type="submit"
+                                   value="Add">
+                        </form>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row ml-auto mt-4 justify-content-center">
+        <a th:href="@{/course/courseMembers/__${courseId}__}" class="btn back">Back</a>
+    </div>
+</div>
+
+</body>
+</html>

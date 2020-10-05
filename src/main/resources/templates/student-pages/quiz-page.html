@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student | Exam</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="/js/quiz-process.js" type="text/javascript"></script>
+</head>
+<body>
+<input type="hidden" th:value="${quizId}" id="quizId">
+
+<!--<div th:each="descriptive:${descriptiveQuestions}" th:hidden="${descriptiveQuestions eq null}" >-->
+
+<!--    <h3 th:text="${descriptive.content}"></h3>-->
+<!--    <textarea class="form-control" cols="10" rows="5"></textarea>-->
+
+<!--</div>-->
+
+<div id="descriptive">
+    <h3 id="descriptive_question"></h3>
+    <div id="answer"></div>
+</div>
+
+<!--<div th:each="multi:${multiChoiceQuestions}" th:hidden="${multiChoiceQuestions eq null}">-->
+<!--    <p th:text="${multi.content}">-->
+<!--    <p th:each="options:${multi.options}">-->
+<!--        <input type="radio" th:value="${options}" th:name="${multi.id}" id="option">-->
+<!--        <label for="option" th:text="${options.content}"/>-->
+<!--    </p>-->
+<!--    </p>-->
+<!--</div>-->
+
+<input type="hidden" value="4" id="total">
+
+<div align="center" class="d-flex justify-content-between ">
+    <a class="btn btn-primary" id="btn_previous" href="#">Previous</a>
+    <a class="btn btn-primary" id="btn_next" href="#" onclick="get_descriptive()" >Next</a>
+    <a class="btn btn-secondary" id="btn_submit" style="display: none">Submit</a>
+    <input type="hidden" id="offset" value="0">
+</div>
+
+<div id="timer">
+
+</div>
+
+</body>
+</html>

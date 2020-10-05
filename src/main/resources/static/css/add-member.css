@@ -1,0 +1,18 @@
+.main{
+    width: 50%;
+    background-color: #DEF7F7;
+    border-radius: 10px;
+    color: #888888;
+}
+.back{
+    width: 80px;
+    background-color: #abdde5;
+}
+.save_btn,.delete_btn{
+    background-color: #91DFEB;
+    width: 95px;
+}
+
+.save_btn:hover,.delete_btn:hover{
+    background-color: #bee5eb;
+}

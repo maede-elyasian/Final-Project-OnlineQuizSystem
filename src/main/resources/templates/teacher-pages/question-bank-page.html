@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Question Bank</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/question-bank.css" type="text/css">
+</head>
+<body class="row justify-content-center align-items-center">
+<div class="main pt-3"><h3 class="text-center p-2">Question Bank</h3></div>
+
+<div class="container pt-4 justify-content-center">
+    <table class="table table-striped table-hover w-60 pt-5">
+        <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Content</th>
+            <th>Creator</th>
+            <th>Course</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="question:${questions}">
+            <td th:text="${question.title}"></td>
+            <td>
+                <span th:if="${question.isMultipleChoice()}">Multiple Choice</span>
+                <span th:if="${!question.isMultipleChoice()}">Descriptive</span>
+            </td>
+            <td th:text="${question.content}"></td>
+            <td th:text="${question.creator.username}"></td>
+            <td th:text="${question.course.courseTitle}"></td>
+            <td>
+                <form th:action="@{/question/addToQuiz/__${quizId}__/__${question.id}__}">
+                    <input type="submit" value="Add" class="btn btn_add">
+                </form>
+            </td>
+
+        </tr>
+    </table>
+<!--    <nav aria-label="Pagination" th:if="${questions.totalPages gt 0}">-->
+<!--        <ul class="pagination justify-content-center font-weight-bold">-->
+<!--            <li class="page-item" th:classappend="${questions.number eq 0} ? 'disabled'">-->
+<!--                <a class="page-link"-->
+<!--                   th:href="@{/question/__${quizId}__/addFromBank(page=${questions.number lt 2 ? 1 : questions.number})}"-->
+<!--                   aria-label="Previous" title="Previous Page" data-toggle="tooltip">-->
+<!--                    <span aria-hidden="true">&laquo;</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li class="page-item" th:classappend="${i eq questions.number + 1} ? 'active'"-->
+<!--                th:each="i : ${#numbers.sequence( 1, questions.totalPages, 1)}">-->
+<!--                <a class="page-link" th:href="@{/question/__${quizId}__/addFromBank(page=${i})}" th:text="${i}"-->
+<!--                   th:title="${'Page '+ i}" data-toggle="tooltip"></a>-->
+<!--            </li>-->
+<!--            <li class="page-item" th:classappend="${questions.number + 1 eq questions.totalPages} ? 'disabled'">-->
+<!--                <a class="page-link"-->
+<!--                   th:href="@{/question/__${quizId}__/addFromBank(page=${questions.number + 2})}"-->
+<!--                   aria-label="Next" title="Next Page" data-toggle="tooltip">-->
+<!--                    <span aria-hidden="true">&raquo;</span>-->
+<!--                </a>-->
+
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+</div>
+<div class="row text-center justify-content-center m-5">
+    <form class="m-2" th:action="@{/question/__${quizId}__/questionPage}">
+        <input class="btn btn-info" type="submit" value="Back To Questions">
+    </form>
+</div>
+
+</body>
+</html>

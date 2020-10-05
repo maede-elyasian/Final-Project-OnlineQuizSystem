@@ -1,7 +1,6 @@
 package ir.maktab.service;
 
 import ir.maktab.model.entity.Role;
-import ir.maktab.model.enums.RoleTitle;
 import ir.maktab.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class RoleService {
        return roleRepository.findAll();
     }
 
-    public Role findByTitle(RoleTitle role){
+    public Role findByTitle(String role){
         Optional<Role> found = roleRepository.findByTitle(role);
         if (found.isPresent()){
             return found.get();

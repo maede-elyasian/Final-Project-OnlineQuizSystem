@@ -16,10 +16,10 @@ import java.util.List;
 
 public interface AccountSpecifications extends JpaSpecificationExecutor<Account> {
 
-    static Specification<Account> findMaxMatch(String roles,
-                                               String statuses,
+    static Specification<Account> findMaxMatch(String role,
+                                               String status,
                                                String name, String lastName,
-                                               String email, String nationalCode) {
+                                               String email) {
         return (Specification<Account>) (root, criteriaQuery, builder) -> {
             CriteriaQuery<Account> resultCriteria = builder.createQuery(Account.class);
             Join<Account, PersonalInfo> personalInfoJoin = root.join("personalInfo");
@@ -27,11 +27,11 @@ public interface AccountSpecifications extends JpaSpecificationExecutor<Account>
             Join<Account, Status> statusJoin = root.join("status");
 
             List<Predicate> predicates = new ArrayList<Predicate>();
-            if (!StringUtils.isEmpty(roles) &&roles!=null) {
-                predicates.add(builder.equal(roleJoin.get("title").as(String.class),roles));
+            if (!StringUtils.isEmpty(role) &&role!=null) {
+                predicates.add(builder.equal(roleJoin.get("title"),role));
             }
-            if (!StringUtils.isEmpty(statuses) &&statuses != null) {
-                predicates.add(builder.equal(statusJoin.get("title").as(String.class),statuses));
+            if (!StringUtils.isEmpty(status) &&status != null) {
+                predicates.add(builder.equal(statusJoin.get("title").as(String.class),status));
             }
 
             if (!StringUtils.isEmpty(name) && name != null) {
@@ -42,9 +42,6 @@ public interface AccountSpecifications extends JpaSpecificationExecutor<Account>
             }
             if (!StringUtils.isEmpty(email) && email != null) {
                 predicates.add(builder.equal(personalInfoJoin.get("email"), email));
-            }
-            if (!StringUtils.isEmpty(nationalCode) && nationalCode != null) {
-                predicates.add(builder.equal(personalInfoJoin.get("nationalCode"), nationalCode));
             }
             resultCriteria.multiselect(root).where(predicates.toArray(new Predicate[0]));
             return resultCriteria.getRestriction();

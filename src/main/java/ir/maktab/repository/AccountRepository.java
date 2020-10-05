@@ -1,10 +1,9 @@
 package ir.maktab.repository;
 
-import ir.maktab.dto.SearchAccountDto;
 import ir.maktab.model.entity.Account;
-import ir.maktab.model.entity.PersonalInfo;
-import ir.maktab.model.entity.Role;
-import ir.maktab.model.enums.RoleTitle;
+import ir.maktab.model.entity.Course;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -19,15 +18,11 @@ public interface AccountRepository extends JpaRepository<Account,Long>, JpaSpeci
 
     Optional<Account> findByUsername(String username);
 
-    Optional<Account> findByPassword(String password);
-
     Optional<Account> findByPersonalInfoEmail(String email);
 
-    Optional<Account> findByUsernameAndPassword(String username, String password);
+    Page<Account> findAll(Specification specififcation, Pageable pageable);
 
-    @Query(value="select count(a.role.id) from Account a where a.role.id=?1")
+    @Query(value="select count(a.id) from Account a where a.role.id=?1")
     Long countAccountByRole(Long roleId);
-
-
 }
 

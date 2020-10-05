@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>ورود</title>
+    <title>Confirmation email</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" >
 </head>
-<body class="text-center row p-5 justify-content-center align-content-center bg-info" style="font-family: 'B Mitra'">
+<body class="text-center row p-5 justify-content-center align-content-center">
 
 
-<span dir="rtl" th:text="'ایمیل فعال سازی به آدرس: ' + ${userEmail} + 'ارسال شده است.'"></span>
+<span th:text="'Confiramtion email has sent to: + ${userEmail}"></span>
 
 </body>
 </html>

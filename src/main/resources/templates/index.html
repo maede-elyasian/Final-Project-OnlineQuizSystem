@@ -2,72 +2,25 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link th:href="@{/css/bootstrap.min.css}"  rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
-    <title>سامانه آزمون آنلاین</title>
-    <style>
-        *{
-            margin:0;
-            padding:0;
-        }
-        body,html{
-
-            height: 100%;
-        }
-        body{
-            background: url('/images/bg2.jpg') no-repeat center center;
-            background-size: cover;
-            font-family: Bbadr;
-        }
-        .container{
-            position: relative;
-
-        }
-        .mainDiv{
-            position: absolute;
-            top: 220px;
-            border: 2px solid #D8D8D8;
-            border-radius: 20px;
-            background-color: #ffffff;
-
-            background-size: cover;
-            height: 240px;
-
-
-        }
-        input[type=submit]{
-            background-color:#ffffff ;
-            border: 2px solid #6CDEF9;
-            width: 200px;
-
-            font-size: 20px;
-        }
-        form input:hover{
-            background-color: #DDF2F7;
-
-        }
-        p{
-            font-size: 25px;
-
-        }
-
-    </style>
+    <link rel="stylesheet" href="/css/index.css" type="text/css">
+    <title>Online Quiz</title>
 </head>
 <body>
 <div class="container">
     <div class=" p-1 w-50 mainDiv" >
         <div class=" p-2 w-auto">
-            <p class="text-center pt-3">سامانه آزمون آنلاین</p>
+            <p class="text-center pt-3" style="color: #7dd5e9">Online Quiz System</p>
             <div class="row text-center justify-content-center pt-5 ">
 
                 <form th:action="@{/login}" class="m-2">
-                    <input type="submit" class="btn" value="ورود">
+                    <input type="submit" class="btn" value="Login">
                 </form>
 
                 <form th:action="@{/register}" class="m-2">
-                    <input type="submit" class="btn" value="ثبت نام">
+                    <input type="submit" class="btn" value="Register">
                 </form>
             </div>
         </div>

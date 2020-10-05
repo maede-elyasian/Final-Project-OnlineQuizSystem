@@ -1,11 +1,13 @@
 package ir.maktab.model.entity;
 
-import ir.maktab.model.enums.LessonTitle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 public class Course {
 
     @Id
@@ -23,17 +25,27 @@ public class Course {
     private String courseTitle;
 
     @OneToOne
-    private Lesson lesson;
+    private Classification classification;
 
     @Column(nullable = false)
-    private String startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
     @Column(nullable = false)
-    private String finishDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ToString.Exclude
+    @JsonIgnore
     private List<Account> students = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Account> teachers;
+    @ManyToMany(cascade =CascadeType.PERSIST)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Account> teachers=new ArrayList<>();
+
+    @OneToMany(mappedBy = "course")
+    @ToString.Exclude
+    private List<Quiz> quizzes=new ArrayList<>();
 }

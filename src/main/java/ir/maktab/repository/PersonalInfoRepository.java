@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface PersonalInfoRepository extends JpaRepository<PersonalInfo,Long> {
 
     Optional<PersonalInfo> findByEmail(String email);
-    Optional<PersonalInfo> findByNationalCode(String nationalCode);
 }
